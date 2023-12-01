@@ -1,24 +1,15 @@
 provider "aws" {
-  region = "us-east-1"
-}
-
-variable "ami" {
-  description = "value"
-}
-
-variable "instance_type" {
-  description = "value"
-  type = map(string)
-
-  default = {
-    "dev" = "t2.micro"
-    "stage" = "t2.medium"
-    "prod" = "t2.xlarge"
-  }
+  region = var.aws_region
 }
 
 module "ec2_instance" {
-  source = "./modules/ec2_instance"
-  ami = var.ami
+  source        = "./modules/ec2_instance"
+  ami           = var.ami
   instance_type = lookup(var.instance_type, terraform.workspace, "t2.micro")
+  aws_region    = "ap-south-1"
+}
+
+output "public_ip_ec2_instance" {
+  value = module.ec2_instance.public_ip
+
 }
