@@ -17,3 +17,17 @@ https://youtu.be/-4IMy5ihiiU
 
 
 ```
+
+```hcl
+# import cloud resources
+
+provider "aws" {
+  region = "ap-south-1"
+}
+
+import {
+    id= "i-038ee8413f89dc055"
+
+    to = aws_instance.my_k8s_ec2
+}
+```
